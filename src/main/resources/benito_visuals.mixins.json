@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "package": "ru.benito.visuals.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "BackgroundRendererMixin",
+    "ClientPlayerEntityMixin",
+    "EntityRendererMixin",
+    "HeldItemRendererMixin",
+    "PlayerEntityRendererMixin",
+    "TitleScreenMixin",
+    "WindowMixin",
+    "WorldRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
