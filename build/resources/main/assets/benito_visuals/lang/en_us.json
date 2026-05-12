@@ -1,0 +1,25 @@
+{
+  "benito.mod.name": "Benito Visuals",
+  "benito.mod.description": "Premium visuals for FunTime",
+
+  "benito.category.combat": "Combat",
+  "benito.category.visuals": "Visuals",
+  "benito.category.player": "Player",
+  "benito.category.misc": "Misc",
+  "benito.category.funtime": "FunTime",
+
+  "benito.gui.title": "Benito Visuals — Control Panel",
+  "benito.gui.search": "Search module...",
+  "benito.gui.enabled": "Enabled",
+  "benito.gui.disabled": "Disabled",
+  "benito.gui.settings": "Settings",
+  "benito.gui.close": "Close",
+  "benito.gui.save": "Save",
+  "benito.gui.theme": "Theme",
+  "benito.gui.accent": "Accent color",
+  "benito.gui.bind": "Bind",
+
+  "benito.menu.join": "Join FunTime",
+  "benito.menu.settings": "Benito Settings",
+  "benito.menu.exit": "Exit"
+}

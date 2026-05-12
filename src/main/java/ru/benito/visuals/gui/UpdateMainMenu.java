@@ -7,10 +7,7 @@ import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.network.ServerAddress;
 import net.minecraft.client.network.ServerInfo;
-import net.minecraft.client.option.ServerList;
-import net.minecraft.client.session.report.ReporterEnvironment;
 import net.minecraft.text.Text;
-import ru.benito.visuals.BenitoClient;
 import ru.benito.visuals.render.RenderUtils;
 
 /**
@@ -59,9 +56,8 @@ public final class UpdateMainMenu {
     private static void joinFuntime(Screen parent) {
         MinecraftClient mc = MinecraftClient.getInstance();
         ServerInfo info = new ServerInfo("FunTime", FUNTIME_ADDRESS, ServerInfo.ServerType.OTHER);
-        mc.setScreen(new net.minecraft.client.gui.screen.multiplayer.ConnectScreen.ConnectingScreen(
-                parent, mc, ServerAddress.parse(FUNTIME_ADDRESS), info, false,
-                new ServerList.Entry(info)));
+        net.minecraft.client.gui.screen.multiplayer.ConnectScreen.connect(
+                parent, mc, ServerAddress.parse(FUNTIME_ADDRESS), info, false, null);
     }
 
     /** Добавить виджет в экран через публичное API addDrawableChild. */
