@@ -44,9 +44,9 @@ public final class HitEffect extends Module {
             double z = origin.z + Math.sin(theta) * radius;
             double y = origin.y + 0.05;
             if (style == Style.PARTICLES) {
-                mc.world.addParticleClient(ParticleTypes.CRIT, x, y, z, 0, 0.25, 0);
+                mc.world.addParticle(ParticleTypes.CRIT, x, y, z, 0, 0.25, 0);
             } else {
-                mc.world.addParticleClient(ParticleTypes.EXPLOSION, x, y, z, 0, 0, 0);
+                mc.world.addParticle(ParticleTypes.EXPLOSION, x, y, z, 0, 0, 0);
             }
         }
     }

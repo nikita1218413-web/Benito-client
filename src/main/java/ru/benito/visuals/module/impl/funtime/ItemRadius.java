@@ -4,10 +4,10 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.Vec3d;
 import ru.benito.visuals.module.Category;
 import ru.benito.visuals.module.Module;
-import ru.benito.visuals.render.RenderUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -79,21 +79,41 @@ public final class ItemRadius extends Module {
         return 0.0;
     }
 
+    private int tickCounter = 0;
+
     /**
-     * Вызывается из WorldRendererMixin после отрисовки сущностей.
-     * В этом классе просто экспортируем рендер-метод, чтобы не тянуть Mixin зависимости.
+     * Визуализация радиуса через частицы (надёжно на 1.21.4 без mixin в рендер-пайплайн).
+     * Рисуем кольцо из END_ROD каждые 2 тика вокруг игроков с донат-предметом.
      */
-    public void renderWorld() {
+    @Override
+    public void onTick() {
         MinecraftClient mc = MinecraftClient.getInstance();
         if (mc.world == null || mc.player == null) return;
+        if ((tickCounter++ & 1) != 0) return;
 
-        int color = 0x806B4CFF;
         for (PlayerEntity p : mc.world.getPlayers()) {
             double r = detectRadius(p);
             if (r <= 0) continue;
-            Vec3d c = p.getPos();
-            if (shape == Shape.CIRCLE) RenderUtils.drawWorldCircle(c, r, 64, color);
-            else                        RenderUtils.drawWorldSphere(c, r, 8, color);
+            drawParticleRing(p.getPos(), r);
+        }
+    }
+
+    private void drawParticleRing(Vec3d center, double radius) {
+        MinecraftClient mc = MinecraftClient.getInstance();
+        int segments = Math.max(24, (int) (radius * 8));
+        int rings = shape == Shape.SPHERE ? 5 : 1;
+
+        for (int ring = 0; ring < rings; ring++) {
+            double phi = rings == 1 ? 0 : (Math.PI * ring / (rings - 1) - Math.PI / 2.0);
+            double yOff = Math.sin(phi) * radius;
+            double r = Math.cos(phi) * radius;
+            for (int i = 0; i < segments; i++) {
+                double theta = (Math.PI * 2.0) * i / segments;
+                double x = center.x + Math.cos(theta) * r;
+                double z = center.z + Math.sin(theta) * r;
+                double y = center.y + 0.1 + yOff;
+                mc.world.addParticle(ParticleTypes.END_ROD, x, y, z, 0, 0, 0);
+            }
         }
     }
 
