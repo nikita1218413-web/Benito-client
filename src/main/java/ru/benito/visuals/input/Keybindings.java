@@ -14,10 +14,11 @@ import ru.benito.visuals.module.impl.funtime.CoordInvite;
  */
 public final class Keybindings {
 
+    // INSERT — по умолчанию, т.к. Right Shift часто конфликтует со sneak
     public static final KeyBinding OPEN_GUI = new KeyBinding(
             "key.benito.gui",
             InputUtil.Type.KEYSYM,
-            GLFW.GLFW_KEY_RIGHT_SHIFT,
+            GLFW.GLFW_KEY_INSERT,
             "category.benito"
     );
 
