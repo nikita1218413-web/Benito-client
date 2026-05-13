@@ -1,17 +1,11 @@
 package ru.benito.visuals.module.impl.combat;
 
-import net.minecraft.client.MinecraftClient;
 import ru.benito.visuals.event.Events;
 import ru.benito.visuals.module.Category;
 import ru.benito.visuals.module.Module;
 
 /**
- * ShiftTap — при нанесении удара кратковременно "отжимает" Shift,
- * чтобы сбросить knockback-резист от крадущегося режима.
- *
- * Реализация: слушаем событие ATTACK_ENTITY, запоминаем тик удара.
- * В onTick() в течение 2 тиков эмулируем "не-сникинг" через оверрайд поля
- * в ClientPlayerEntityMixin (см. методы get/set).
+ * ShiftTap — при ударе кратко "отжимает" Shift для сброса KB-резиста.
  */
 public final class ShiftTap extends Module {
 
@@ -20,13 +14,11 @@ public final class ShiftTap extends Module {
     public ShiftTap() {
         super("ShiftTap", "ShiftTap",
                 "Автоматическое отжатие Shift при ударе", Category.COMBAT);
-    }
 
-    @Override
-    protected void onEnable() {
+        // Регистрируем ОДИН раз — избегаем дублирования листенеров
         Events.ATTACK_ENTITY.register((target, crit) -> {
             if (!isEnabled()) return;
-            releaseTicks = 2; // пропускаем sneaking 2 тика
+            releaseTicks = 2;
         });
     }
 
@@ -35,9 +27,8 @@ public final class ShiftTap extends Module {
         if (releaseTicks > 0) releaseTicks--;
     }
 
-    /** Используется ClientPlayerEntityMixin → решает: нужно ли игнорить sneak.
-     *  ВАЖНО: не вызываем mc.player.isSneaking() — этот метод перехвачен нашим же Mixin'ом
-     *  и вызов привёл бы к бесконечной рекурсии / StackOverflowError. */
+    /** Используется ClientPlayerEntityMixin. НЕ вызываем isSneaking()
+     *  изнутри — это привело бы к StackOverflow через наш же хук. */
     public boolean shouldForceUnsneak() {
         return releaseTicks > 0;
     }

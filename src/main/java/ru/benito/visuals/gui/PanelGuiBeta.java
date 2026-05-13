@@ -201,8 +201,12 @@ public final class PanelGuiBeta extends Screen {
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double horizAmount, double verticalAmount) {
+        int listSize = BenitoClient.get().modules().getByCategory(active).size() * 28;
+        int visible  = HEIGHT - 42;
+        int maxScroll = Math.max(0, listSize - visible);
         scroll -= (int) (verticalAmount * 18);
         if (scroll < 0) scroll = 0;
+        if (scroll > maxScroll) scroll = maxScroll;
         return true;
     }
 

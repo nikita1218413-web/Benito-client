@@ -9,8 +9,9 @@ import ru.benito.visuals.module.Category;
 import ru.benito.visuals.module.Module;
 
 /**
- * HitEffect — эффект "волны" при критическом ударе.
- * Используется только при crit == true.
+ * HitEffect — эффект "волны" частиц при критическом ударе.
+ * Листенер регистрируется ОДИН раз в конструкторе — иначе каждый toggle
+ * добавлял бы новый листенер → дублирование частиц.
  */
 public final class HitEffect extends Module {
 
@@ -21,10 +22,7 @@ public final class HitEffect extends Module {
     public HitEffect() {
         super("HitEffect", "HitEffect",
                 "Эффект волны при критическом ударе", Category.COMBAT);
-    }
 
-    @Override
-    protected void onEnable() {
         Events.ATTACK_ENTITY.register((target, crit) -> {
             if (!isEnabled() || !crit) return;
             spawnWave(target);
