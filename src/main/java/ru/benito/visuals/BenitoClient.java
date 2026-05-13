@@ -8,6 +8,7 @@ import net.minecraft.text.Text;
 import ru.benito.visuals.config.ConfigManager;
 import ru.benito.visuals.gui.PanelGuiBeta;
 import ru.benito.visuals.gui.Theme;
+import ru.benito.visuals.gui.UpdateMainMenu;
 import ru.benito.visuals.hud.ArrayList;
 import ru.benito.visuals.input.Keybindings;
 import ru.benito.visuals.module.Module;
@@ -38,6 +39,7 @@ public final class BenitoClient implements ClientModInitializer {
         this.configManager = new ConfigManager(moduleManager, theme);
 
         Keybindings.register();
+        UpdateMainMenu.register();
 
         // Tick — прокидываем в менеджер (модули получают onTick)
         ClientTickEvents.END_CLIENT_TICK.register(this::onClientTick);

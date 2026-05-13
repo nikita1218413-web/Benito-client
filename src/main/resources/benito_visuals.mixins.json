@@ -6,7 +6,6 @@
     "ClientPlayerEntityMixin",
     "ClientPlayerInteractionManagerMixin",
     "HeldItemRendererMixin",
-    "TitleScreenMixin",
     "WindowMixin"
   ],
   "injectors": {
