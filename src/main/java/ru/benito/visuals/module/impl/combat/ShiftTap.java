@@ -35,9 +35,10 @@ public final class ShiftTap extends Module {
         if (releaseTicks > 0) releaseTicks--;
     }
 
-    /** Используется ClientPlayerEntityMixin → решает: нужно ли игнорить sneak. */
+    /** Используется ClientPlayerEntityMixin → решает: нужно ли игнорить sneak.
+     *  ВАЖНО: не вызываем mc.player.isSneaking() — этот метод перехвачен нашим же Mixin'ом
+     *  и вызов привёл бы к бесконечной рекурсии / StackOverflowError. */
     public boolean shouldForceUnsneak() {
-        MinecraftClient mc = MinecraftClient.getInstance();
-        return releaseTicks > 0 && mc.player != null && mc.player.isSneaking();
+        return releaseTicks > 0;
     }
 }
