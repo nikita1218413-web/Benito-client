@@ -5,13 +5,11 @@
   "client": [
     "ClientPlayerEntityMixin",
     "ClientPlayerInteractionManagerMixin",
-    "EntityRendererMixin",
     "HeldItemRendererMixin",
-    "PlayerEntityRendererMixin",
     "TitleScreenMixin",
     "WindowMixin"
   ],
   "injectors": {
-    "defaultRequire": 1
+    "defaultRequire": 0
   }
 }
